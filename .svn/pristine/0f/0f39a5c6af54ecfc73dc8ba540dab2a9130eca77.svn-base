@@ -1,0 +1,23 @@
+<div id="disclaimer" class="col-md-12" style="display: none;">
+	<div class="contentpanelinner-disc">
+		<h3 class="custom-text">
+			${param.pDisclaimerTitle}
+		</h3>
+		<span id="disclaimer-text" class="custom-textspecial">While we
+			have made every effort to ensure that the information contained in
+			this website is free from error, Apply Financial do not warrant the
+			accuracy, adequacy or completeness of the material on this website.
+			All information is subject to change without notice. Apply Financial
+			do not guarantee that this website or any third party websites linked
+			to this website will be free from viruses, or that access to this
+			website or any third party website will be uninterrupted. Apply
+			Financial do not warrant the security of passwords for this website
+			beyond the security measures in place on the webserver. Subject to
+			any responsibilities implied by law and which cannot be excluded,
+			Apply Financial are not liable to you for any losses, damages,
+			liabilities, claims and expenses (including but not limited to legal
+			costs and defense or settlement costs) whatsoever arising out of or
+			referable to any material on this website or any third party website
+			whether in contract, tort including negligence, statute or otherwise.</span>
+	</div>
+</div>

@@ -1,0 +1,180 @@
+package uk.co.applyfinancial.validate.util;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import uk.co.applyfinancial.validate.security.ValidateUserDetails;
+
+/**
+ * Utility class to determine which view UI to use for display for certain
+ * scenarios. e.g. specific UI to use for a given company.
+ * 
+ * This class is defined to be used under the Session scope.
+ */
+public class ViewUtil {
+
+	private static final Logger logger = LoggerFactory.getLogger(ViewUtil.class);
+	
+	@Autowired
+	private ApplicationContext appContext;
+	
+	/**
+	 * Get applysearchsimple view. Use company specific view if defined. e.g. View {@code /apply/companies/<compId>/applysearchsimple.jsp} is available.
+	 * Otherwise, use {@code /apply/applysearchsimple.jsp} as default.
+	 * 
+	 * Note: 
+	 * When creating a company specific page, make sure includes in that page are correct. Some errors are not being shown in screen.
+	 * Also, if authenticationPrincipal is not an instanceof ValidateUserDetails, redirect to {@code /apply/logout}.
+	 * @param authenticationPrincipal
+	 * @return
+	 */
+	public String getSearchSimpleView(Object authenticationPrincipal) {
+		if (authenticationPrincipal instanceof ValidateUserDetails) {
+			
+			ValidateUserDetails user = (ValidateUserDetails) authenticationPrincipal;
+			String companyId = user.getCompanyId();
+			String searchSimpleView = "/apply/applysearchsimple";
+			if(StringUtils.isBlank(companyId)) {
+				logger.debug("Search simple view used is: " + searchSimpleView);
+				return searchSimpleView;
+			}
+	
+			String compDiscRelPathPrefix = "/WEB-INF/views/jsp";
+			String companySpecificSimpleView = "/apply/companies/" + companyId + "/applysearchsimple";
+			Resource reso = appContext.getResource(compDiscRelPathPrefix + companySpecificSimpleView + ".jsp");
+			if (reso.exists()) {
+				logger.debug("Search simple view used is: " + companySpecificSimpleView);
+				searchSimpleView = companySpecificSimpleView;
+			}
+	
+			logger.debug("Search simple view used is: " + searchSimpleView);
+			return searchSimpleView;
+		
+		}
+		
+		return "redirect:/apply/logout";
+	}
+
+	/**
+	 * Get popup_bank_searchresults view. Use company specific view if defined. e.g. View {@code /apply/companies/<compId>/popup_bank_searchresults.jsp} is available.
+	 * Otherwise, use {@code /apply/popup_bank_searchresults.jsp} as default.
+	 * 
+	 * Note: 
+	 * When creating a company specific page, make sure includes in that page are correct. Some errors are not being shown in screen.
+	 * Also, if authenticationPrincipal is not an instanceof ValidateUserDetails, redirect to {@code /apply/logout}.
+	 * @param authenticationPrincipal
+	 * @return
+	 */
+	public String getPopupBankSearchResultsView(Object authenticationPrincipal) {
+		if (authenticationPrincipal instanceof ValidateUserDetails) {
+			
+			ValidateUserDetails user = (ValidateUserDetails) authenticationPrincipal;
+			String companyId = user.getCompanyId();
+			String popupBankSearchResultsView = "/apply/popup_bank_searchresults";
+			if(StringUtils.isBlank(companyId)) {
+				logger.debug("popup_bank_searchresults view used is: " + popupBankSearchResultsView);
+				return popupBankSearchResultsView;
+			}
+	
+			String compDiscRelPathPrefix = "/WEB-INF/views/jsp";
+			String companySpecificView = "/apply/companies/" + companyId + "/popup_bank_searchresults";
+			Resource reso = appContext.getResource(compDiscRelPathPrefix + companySpecificView + ".jsp");
+			if (reso.exists()) {
+				logger.debug("popup_bank_searchresults view used is: " + companySpecificView);
+				popupBankSearchResultsView = companySpecificView;
+			}
+	
+			logger.debug("popup_bank_searchresults view used is: " + popupBankSearchResultsView);
+			return popupBankSearchResultsView;
+		}
+		
+		return "redirect:/apply/logout";
+	}
+	
+	/**
+	 * Get applyresults view. Use company specific view if defined. e.g. View {@code /apply/companies/<compId>/applyresults.jsp} is available.
+	 * Otherwise, use {@code /apply/applyresults.jsp} as default.
+	 * 
+	 * Note: 
+	 * When creating a company specific page, make sure includes in that page are correct. Some errors are not being shown in screen.
+	 * Also, if authenticationPrincipal is not an instanceof ValidateUserDetails, redirect to {@code /apply/logout}.
+	 * @param authenticationPrincipal
+	 * @return
+	 */
+	public String getResultsView(Object authenticationPrincipal) {
+		if (authenticationPrincipal instanceof ValidateUserDetails) {
+			
+			ValidateUserDetails user = (ValidateUserDetails) authenticationPrincipal;
+			String companyId = user.getCompanyId();
+			String resultsView = "/apply/applyresults";
+			if(StringUtils.isBlank(companyId)) {
+				logger.debug("Results view used is: " + resultsView);
+				return resultsView;
+			}
+	
+			String compDiscRelPathPrefix = "/WEB-INF/views/jsp";
+			String companySpecificSimpleView = "/apply/companies/" + companyId + "/applyresults";
+			Resource reso = appContext.getResource(compDiscRelPathPrefix + companySpecificSimpleView + ".jsp");
+			if (reso.exists()) {
+				logger.debug("Results view used is: " + companySpecificSimpleView);
+				resultsView = companySpecificSimpleView;
+			}
+	
+			logger.debug("Results view used is: " + resultsView);
+			return resultsView;
+		}
+		
+		return "redirect:/apply/logout";
+	}
+	
+	/**
+	 * Get the navigation bar jsp file to use and include in pages. 
+	 * Return company specific applynavbar.jsp file if defined. e.g. Jsp file {@code /apply/companies/<compId>/applynavbar.jsp} is available.
+	 * Otherwise, use {@code ../common/applynavbar.jsp} as default.
+	 * 
+	 * @return
+	 * TODO Not being used as of now, but maybe useful later on. Keeping it.
+	 *
+	public String getNavBarJsp() {
+		
+		try {
+			Object authenticationPrincipal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			if (authenticationPrincipal instanceof ValidateUserDetails) {
+				
+				if(StringUtils.isNotBlank(navBarJsp)) {
+					return navBarJsp;
+				}
+				
+				ValidateUserDetails user = (ValidateUserDetails) authenticationPrincipal;
+				String companyId = user.getCompanyId();
+				navBarJsp = "common/applynavbar.jsp";
+				if(StringUtils.isBlank(companyId)) {
+					logger.debug("navBarJsp used is: " + navBarJsp);
+					return navBarJsp;
+				}
+
+				String compDiscRelPathPrefix = "/WEB-INF/views/jsp/";
+				String companySpecificSimpleView = "apply/companies/" + companyId + "/applynavbar.jsp";
+				Resource reso = appContext.getResource(compDiscRelPathPrefix + companySpecificSimpleView);
+				if (reso.exists()) {
+					logger.debug("navBarJsp used is: " + companySpecificSimpleView);
+					navBarJsp = companySpecificSimpleView;
+				}
+
+				logger.debug("navBarJsp used is: " + navBarJsp);
+				return navBarJsp;
+			}
+		} catch (Exception e) {
+			//Error most likely due to security failure.
+			logger.debug("Exception encountered trying to get navBarJsp." + e.getMessage());
+		}
+		
+		return "../common/applynavbar.jsp";
+	}
+	*/
+}

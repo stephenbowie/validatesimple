@@ -1,0 +1,68 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ include file="../WEB-INF/views/jsp/common/include.jsp"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><spring:message code="apply.error.title" /></title>
+	<%@ include file="../WEB-INF/views/jsp/common/applyheaderinclude.jsp" %>
+</head>
+<body>
+	<%@ include file="../WEB-INF/views/jsp/common/applynavbar.jsp" %>
+	<div class="main-title">
+	  	<div class="container">
+	  		<div class="row">&nbsp;</div>
+	  		<div class="row">&nbsp;</div>
+	  		<div class="row">&nbsp;</div>
+		    <div class="row-fluid">
+		      	<div class="col-md-12">
+		      		<br/>
+		        	<h3><spring:message code="error.title" /></h3>
+		      	</div>
+		    </div>
+	  	</div>
+	</div>
+	<form:form id="errorForm" action="" autocomplete="off"></form:form>
+	<div class="container">
+		<div class="row">&nbsp;</div>
+		<div class="row">&nbsp;</div>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<div class="alert alert-danger">
+					<span class="text-error"><spring:message code="error.404.message" /></span><br>
+	        	</div>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+	</div>
+</body>
+<script>
+	$(document).ready(function(){
+
+		//script by http://jordanhollinger.com
+		// It works without the History API, but will clutter up the history
+		var history_api = typeof history.pushState !== 'undefined';
+
+		// The previous page asks that it not be returned to
+		if ( location.hash == '#no-back' ) {
+		  // Push "#no-back" onto the history, making it the most recent "page"
+		  if ( history_api ) {history.pushState(null, '', '#done');}
+		  else {location.hash = '#done';}
+
+		  // When the back button is pressed, it will harmlessly change the url
+		  // hash from "#done" to "#no-back", which triggers this function
+		  window.onhashchange = function() {
+			    // User tried to go back; warn user, rinse and repeat
+			    if ( location.hash == '#no-back' ) {
+			      if ( history_api ) {history.pushState(null, '', '#done');}
+			      else {location.hash = '#done';}
+			    }
+		  };
+		}
+	});
+</script>
+</html>

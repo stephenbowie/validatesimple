@@ -1,0 +1,70 @@
+package uk.co.applyfinancial.whitelabeling;
+
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+
+public class LockManager {
+
+	//These two maps contain locks per company. The sizes of the maps are the number of companies
+	//that are using the application.
+	//Once added the lock is not removed.
+	
+	//TODO add scheduled task to remove locks once a month
+	
+	private static final ConcurrentHashMap<String,CompanySpecificLock> imageLocks = new ConcurrentHashMap<String,CompanySpecificLock>();
+	private static final ConcurrentHashMap<String,CompanySpecificLock> cssLocks = new ConcurrentHashMap<String,CompanySpecificLock>();
+	
+	private static final Logger logger = LoggerFactory.getLogger(LockManager.class);
+	
+	public CompanySpecificLock getImageLocker(String ID){
+		
+		CompanySpecificLock lock = imageLocks.get(ID);
+		
+		if (lock == null) {
+			lock = new CompanySpecificLock(ID);
+			this.setImageLocker(ID, lock);
+		}
+		
+		return imageLocks.get(ID);
+		
+	}
+	
+	public void setImageLocker(String ID,CompanySpecificLock lock){
+		
+		CompanySpecificLock temp = imageLocks.putIfAbsent(ID, lock);
+		
+		if(temp == null){
+			
+			logger.debug("new lock added to the imageLocks");
+			
+		}
+	}
+	
+	public void setCssLocker(String ID,CompanySpecificLock lock){
+		
+		CompanySpecificLock temp = cssLocks.putIfAbsent(ID, lock);
+		
+		if(temp == null){
+			
+			logger.debug("new lock added to the cssLocks");
+			
+		}
+	}
+	
+	public CompanySpecificLock getCssLocker(String ID){
+		
+		CompanySpecificLock lock = cssLocks.get(ID);
+		
+		if (lock == null) {
+			lock = new CompanySpecificLock(ID);
+			this.setCssLocker(ID, lock);
+		}
+		
+		return cssLocks.get(ID);
+		
+	}
+}

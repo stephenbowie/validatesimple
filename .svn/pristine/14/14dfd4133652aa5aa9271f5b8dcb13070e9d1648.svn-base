@@ -1,0 +1,101 @@
+package uk.co.applyfinancial.validate.dto;
+
+import java.io.Serializable;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope(value="session", proxyMode=ScopedProxyMode.TARGET_CLASS)
+public class SepaDetailsDTO implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4553289478740308329L;
+
+	private String ctStatus;
+	private String ddStatus;
+	private String bbStatus;
+
+	private boolean isSEPA;
+
+	/**
+	 * @param ctStatus
+	 * @param ddStatus
+	 * @param bbStatus
+	 * @param isSEPA
+	 */
+	public SepaDetailsDTO(String ctStatus, String ddStatus, String bbStatus, boolean isSEPA) {
+		super();
+		this.ctStatus = ctStatus;
+		this.ddStatus = ddStatus;
+		this.bbStatus = bbStatus;
+		this.isSEPA = isSEPA;
+	}
+
+	/**
+	 * @param ctStatus
+	 * @param ddStatus
+	 * @param bbStatus
+	 */
+	public SepaDetailsDTO(String ctStatus, String ddStatus, String bbStatus) {
+		super();
+		this.ctStatus = ctStatus;
+		this.ddStatus = ddStatus;
+		this.bbStatus = bbStatus;
+	}
+	public SepaDetailsDTO() {
+		super();
+	}
+	/**
+	 * @return the ctStatus
+	 */
+	public String getCtStatus() {
+		return ctStatus;
+	}
+	/**
+	 * @param ctStatus the ctStatus to set
+	 */
+	public void setCtStatus(String ctStatus) {
+		this.ctStatus = ctStatus;
+	}
+	/**
+	 * @return the ddStatus
+	 */
+	public String getDdStatus() {
+		return ddStatus;
+	}
+	/**
+	 * @param ddStatus the ddStatus to set
+	 */
+	public void setDdStatus(String ddStatus) {
+		this.ddStatus = ddStatus;
+	}
+	/**
+	 * @return the bbStatus
+	 */
+	public String getBbStatus() {
+		return bbStatus;
+	}
+	/**
+	 * @param bbStatus the bbStatus to set
+	 */
+	public void setBbStatus(String bbStatus) {
+		this.bbStatus = bbStatus;
+	}
+	/**
+	 * @return the isSEPA
+	 */
+	public boolean getIsSEPA() {
+		return isSEPA;
+	}
+	/**
+	 * @param isSEPA the isSEPA to set
+	 */
+	public void setIsSEPA(boolean isSEPA) {
+		this.isSEPA = isSEPA;
+	}
+
+}

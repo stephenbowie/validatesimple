@@ -1,0 +1,39 @@
+package uk.co.applyfinancial.whitelabeling;
+
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class CompanySpecificLock {
+
+		@SuppressWarnings("unused")
+		private String ID;
+		private final ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+		private final ReadLock read = readWriteLock.readLock();
+		private final WriteLock write = readWriteLock.writeLock();
+		private static final Logger logger = LoggerFactory.getLogger(CompanySpecificLock.class);
+
+		public CompanySpecificLock(String ID) {
+			this.ID = ID;
+			logger.debug("new companyLock created " + ID);
+		}
+		
+		public void readLocker(){
+			read.lock();
+		}
+		
+		public void readUnLocker(){
+			read.unlock();
+		}
+		
+		public void writeLocker(){
+			write.lock();
+		}
+		
+		public void writeUnLocker(){
+			write.unlock();
+		}
+}

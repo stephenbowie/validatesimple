@@ -1,0 +1,37 @@
+<%@ include file="include.jsp" %>
+<div class="footer-final navbar-fixed-bottom">
+	<div class="credits col-md-12">&nbsp;v<spring:message code="release.version"/> &nbsp; &nbsp; &copy; <spring:message code="copyright"/> Apply Financial. All Rights Reserved.</div>
+	<%--<div class="container">
+		<div class="row">
+			<div class="credits col-md-6">&nbsp;v<spring:message code="release.version"/> &nbsp; &nbsp; &copy; <spring:message code="copyright"/> Apply Financial. All Rights Reserved.</div>
+			<div class="col-md-6">				
+				<!-- <div id="footer-linkedin">
+					<script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
+					<script type="IN/FollowCompany" data-id="1607721"
+						data-counter="right"></script>
+				</div>
+				<div id="footer-twitter">
+					<a href="https://twitter.com/applyfinancial"
+						class="twitter-follow-button">Follow @applyfinancial</a>
+				</div> -->
+			</div>
+		</div>
+	</div>--%>
+</div>
+<%--
+<!--Touch fix-->
+<script>$('a.dropdown-toggle, .dropdown-menu a').on('touchstart', function(e) {
+  e.stopPropagation();
+});</script>
+<!--Twitter scripts--> 
+<script type="text/javascript" src="${contextPath}/js/jquery.tweets.js"></script> 
+<script type='text/javascript'>
+        $(document).ready(function(){
+       /*  $("#twitter-list").tweet({
+        username: "applyfinancial",
+        count: 1,
+        loading_text: "Loading tweets..."
+        });*/
+        });
+</script>
+ --%>
